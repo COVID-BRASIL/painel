@@ -234,6 +234,27 @@ daily_confirmed %>%
   ) %>%
   plotly::add_trace(
     x = ~date,
+    y = ~Argentina,
+    type = "scatter",
+    mode = "lines+markers",
+    name = "Argentina"
+  ) %>%
+  plotly::add_trace(
+    x = ~date,
+    y = ~Ecuador,
+    type = "scatter",
+    mode = "lines+markers",
+    name = "Ecuador"
+  ) %>%
+  plotly::add_trace(
+    x = ~date,
+    y = ~US,
+    type = "scatter",
+    mode = "lines+markers",
+    name = "US"
+  ) %>%
+  plotly::add_trace(
+    x = ~date,
     y = ~France,
     type = "scatter",
     mode = "lines+markers",
@@ -278,9 +299,12 @@ daily_confirmed %>%
 df_EU <- coronavirus %>%
   # dplyr::filter(date == max(date)) %>%
   dplyr::filter(Country.Region == "Brazil" |
+    Country.Region == "Argentina" |
+    Country.Region == "Ecuador" |
     Country.Region == "France" |
     Country.Region == "Italy" |
-    Country.Region == "Spain") %>%
+    Country.Region == "Spain" |
+    Country.Region == "US") %>%
   dplyr::group_by(Country.Region, type) %>%
   dplyr::summarise(total = sum(cases)) %>%
   tidyr::pivot_wider(
