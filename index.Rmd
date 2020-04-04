@@ -19,6 +19,24 @@ update_datasets()
 # View(coronavirus)
 # max(coronavirus$date)
 
+library(tidycovid19)
+library(dplyr)
+library(ggplot2)  
+library(ggrepel)
+merged_dta <- download_merged_data(cached = TRUE)
+
+merged_dta %>%
+  group_by(country) %>%
+  mutate(
+    reported_deaths = max(deaths),
+    soc_dist_measures = max(soc_dist)
+  ) %>%
+  select(country, iso3c, reported_deaths, soc_dist_measures) %>%
+  distinct() %>%
+  ungroup() %>%
+  arrange(-reported_deaths) %>%
+  head(20) -> df
+
 `%>%` <- magrittr::`%>%`
 #------------------ Parameters ------------------
 # Set colors
@@ -353,6 +371,20 @@ plotly::plot_ly(
   )
 ```
 
+More Comparisons
+=======================================================================
+
+```{r}
+p <- plot_covid19_spread(merged_dta, highlight = c("ARG", "BOL", "BRA", "CHL", 
+                                                   "COL", "ECU", "PAR", "PER", 
+                                                   "URU", "VEN", "GUY", "ITA", 
+                                                   "ESP", "FRA", "USA", "CHN", 
+                                                   "GBR", "IDN", "KOR", "TUR", 
+                                                   "JPN", "DEU"), 
+                    intervention = "lockdown", min_cases = 25)
+p 
+```
+
 
 Map
 =======================================================================
@@ -372,7 +404,8 @@ cv_data_for_plot <- coronavirus %>%
   dplyr::mutate(log_cases = 2 * log(cases)) %>%
   dplyr::ungroup()
 cv_data_for_plot.split <- cv_data_for_plot %>% split(cv_data_for_plot$type)
-pal <- colorFactor(c("orange", "red", "green"), domain = c("confirmed", "death", "recovered"))
+pal <- colorFactor(c("orange", "red", "green"), 
+                   domain = c("confirmed", "death", "recovered"))
 map_object <- leaflet() %>% addProviderTiles(providers$Stamen.Toner)
 names(cv_data_for_plot.split) %>%
   purrr::walk(function(df) {
