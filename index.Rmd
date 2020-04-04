@@ -12,8 +12,7 @@ output:
 ```{r setup, include=FALSE}
 #------------------ Packages ------------------
 library(flexdashboard)
-# install.packages("devtools")
-# devtools::install_github("RamiKrispin/coronavirus", force = TRUE)
+# remotes::install_github("RamiKrispin/coronavirus", force = TRUE)
 library(coronavirus)
 data(coronavirus)
 update_datasets()
