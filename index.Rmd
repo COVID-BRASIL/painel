@@ -12,12 +12,13 @@ output:
 ```{r setup, include=FALSE}
 #------------------ Packages ------------------
 library(flexdashboard)
-# remotes::install_github("RamiKrispin/coronavirus", force = TRUE)
+#remotes::install_github("RamiKrispin/coronavirus", force = TRUE)
 library(coronavirus)
 data(coronavirus)
 update_datasets()
 # View(coronavirus)
 # max(coronavirus$date)
+remotes::install_github("joachim-gassen/tidycovid19")
 
 library(tidycovid19)
 library(dplyr)
