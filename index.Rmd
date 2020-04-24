@@ -387,7 +387,7 @@ p
 ```
 
 
-Map
+Mapa Mundi
 =======================================================================
 
 ### **World map of cases** (*use + and - icons to zoom in/out*)
@@ -441,6 +441,20 @@ map_object %>%
 ```
 
 
+Mapa Brasil
+=======================================================================
+
+```{r}
+library(sf)
+df <- read.csv2("data/COVID19_20200404.csv")
+brasil_shp <- st_read("data/unidades_federacao.geojson")
+brasil_shp <- brasil_shp[order(brasil_shp$NM_ESTADO), ]
+sigla_estados <- unique(df$estado)
+sigla_estados <- sigla_estados[c(1, 2, 4, 3, 5, 6 , 7, 8, 9, 10, 13, 12, 11, 14,
+                                 15, 18, 16, 17, 19, 20, 23, 21, 22, 24, 26, 25, 27)]
+brasil_shp$estado <- sigla_estados
+brasil_shp <- brasil_shp[, c(1, 5, 2, 3, 4)]
+```
 
 
 
